@@ -103,6 +103,8 @@ describe('PostService', () => {
   });
 
   afterAll(async () => {
+    await prismaService.post.deleteMany();
+    await prismaService.user.deleteMany();
     await prismaService.$disconnect();
   });
 });
