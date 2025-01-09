@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateRequestDto } from './dtos/request/create-request.dto';
 import { UpdateRequestDto } from './dtos/request/update-request.dto';
+import { Post } from '@prisma/client';
 
 @Injectable()
 export class PostService {
@@ -11,13 +12,13 @@ export class PostService {
     return this.prismaService.post.findMany();
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<Post> {
     return this.prismaService.post.findUnique({
       where: { id },
     });
   }
 
-  async create(createRequestDto: CreateRequestDto) {
+  async create(createRequestDto: CreateRequestDto): Promise<Post> {
     return this.prismaService.post.create({
       data: {
         title: createRequestDto.title,
@@ -27,7 +28,7 @@ export class PostService {
     });
   }
 
-  async update(id: number, updateRequestDto: UpdateRequestDto) {
+  async update(id: number, updateRequestDto: UpdateRequestDto): Promise<Post> {
     return this.prismaService.post.update({
       where: { id },
       data: {
@@ -38,7 +39,7 @@ export class PostService {
     });
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<Post> {
     return this.prismaService.post.delete({
       where: { id },
     });
